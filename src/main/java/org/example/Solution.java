@@ -1,30 +1,28 @@
 package org.example;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class Solution {
-    public int romanToInt(String s) {
-        Map<Character, Integer> map = new HashMap<>();
-        map.put('I', 1);
-        map.put('V', 5);
-        map.put('X', 10);
-        map.put('L', 50);
-        map.put('C', 100);
-        map.put('D', 500);
-        map.put('M', 1000);
+    private void sortColors(int[] nums) {
+        int low = 0;
+        int mid = 0;
+        int high = nums.length - 1;
 
-        int total = 0;
-        int prevValue = 0;
-        for(char c : s.toCharArray()) {
-            int currentValue = map.get(c);
-            if(currentValue > prevValue) {
-                total += currentValue - (2 * prevValue);
+        while(mid <= high) {
+            if(nums[mid] == 0) {
+                swap(nums, low, mid);
+                low++;
+                mid++;
+            } else if(nums[mid] == 1) {
+                mid++;
             } else {
-                total += currentValue;
+                swap(nums, mid, high);
+                high--;
             }
-            prevValue = currentValue;
         }
-        return total;
+    }
+
+    private void swap(int[] arr, int i, int j) {
+        int temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
     }
 }
