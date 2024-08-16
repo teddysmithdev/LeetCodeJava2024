@@ -1,26 +1,38 @@
 package org.example;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 public class Solution {
-    public int[][] merge(int[][] intervals) {
-        if (intervals == null || intervals.length == 0) {
-            return new int[0][0];
-        }
-        List<int[]> ans = new ArrayList<>();
-        Arrays.sort(intervals, (a, b) -> a[0] - b[0]);
+    public int numIslands(char[][] grid) {
+        int numOfIslands = 0;
 
-        for(int i = 0; i < intervals.length; i++) {
-            int tempMin = intervals[i][0];
-            int tempMax = intervals[i][1];
-            while(i + 1 < intervals.length && (intervals[i + 1][0] <= tempMax || intervals[i + 1][1] <= tempMax)) {
-                tempMax = Math.max(tempMax, intervals[i + 1][1]);
-                i++;
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[i].length; j++) {
+                if(grid[i][j] == '1'){
+                    traverseIsland(grid, i, j);
+                    numOfIslands++;
+                }
             }
-            ans.add(new int[]{tempMin, tempMax});
         }
-        return ans.toArray(new int[0][]);
+        return numOfIslands;
+    }
+
+    private void traverseIsland(char[][] grid, int i, int j) {
+        if(grid[i][j] == '0'){
+            return;
+        }
+
+        grid[i][j] = '0';
+
+        if(i > 0) {
+            traverseIsland(grid, i - 1, j);
+        }
+        if(i < grid.length - 1) {
+            traverseIsland(grid, i + 1, j);
+        }
+        if(j > 0) {
+            traverseIsland(grid, i, j - 1);
+        }
+        if(j < grid[0].length - 1) {
+            traverseIsland(grid, i, j + 1);
+        }
     }
 }
