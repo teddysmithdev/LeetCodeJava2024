@@ -1,23 +1,17 @@
 package org.example;
 
 public class Solution {
-    public int myAtoi(String s) {
-        int index = 0, total = 0, sign = 1;
-        if(s.length() == 0) return 0;
-        while(index < s.length() && s.charAt(index) == ' ') index++;
-        if(index == s.length()) return 0;
-        if(s.charAt(index) == '+' || s.charAt(index) == '-') {
-            sign = s.charAt(index) == '+' ? 1 : -1;
-            index++;
+    public int rob(int[] nums) {
+        if(nums.length == 0) return 0;
+        if(nums.length == 1) return nums[0];
+        if(nums.length == 2) return Math.max(nums[0], nums[1]);
+
+        int[] dp = new int[nums.length];
+        dp[0] = nums[0];
+        dp[1] = Math.max(nums[0], nums[1]);
+        for(int i = 2; i < nums.length; i++) {
+            dp[i] = Math.max(dp[i-2] + nums[i], dp[i-1]);
         }
-        while(index < s.length()) {
-            int digit = s.charAt(index) - '0';
-            if (digit < 0 || digit > 9) break;
-            if(Integer.MAX_VALUE / 10 < total || Integer.MAX_VALUE / 10 == total && Integer.MAX_VALUE % 10 < digit)
-                return sign == 1 ? Integer.MAX_VALUE : Integer.MIN_VALUE;
-            total = total * 10 + digit; //123
-            index++;
-        }
-        return total * sign;
+        return dp[nums.length-1];
     }
 }
