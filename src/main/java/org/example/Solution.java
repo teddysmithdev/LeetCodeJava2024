@@ -1,18 +1,23 @@
 package org.example;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class Solution {
-    Map<Node, Node> map = new HashMap<>();
-    public Node cloneGraph(Node node) {
-        if(node == null) return null;
-        Node curr = new Node(node.val);
-        map.put(node, curr);
-        for(Node nei : node.neighbors) {
-            if(!map.containsKey(nei)) cloneGraph(nei);
-            curr.neighbors.add(map.get(nei));
+    public int myAtoi(String s) {
+        int index = 0, total = 0, sign = 1;
+        if(s.length() == 0) return 0;
+        while(index < s.length() && s.charAt(index) == ' ') index++;
+        if(index == s.length()) return 0;
+        if(s.charAt(index) == '+' || s.charAt(index) == '-') {
+            sign = s.charAt(index) == '+' ? 1 : -1;
+            index++;
         }
-        return curr;
+        while(index < s.length()) {
+            int digit = s.charAt(index) - '0';
+            if (digit < 0 || digit > 9) break;
+            if(Integer.MAX_VALUE / 10 < total || Integer.MAX_VALUE / 10 == total && Integer.MAX_VALUE % 10 < digit)
+                return sign == 1 ? Integer.MAX_VALUE : Integer.MIN_VALUE;
+            total = total * 10 + digit; //123
+            index++;
+        }
+        return total * sign;
     }
 }
