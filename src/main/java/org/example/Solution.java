@@ -1,17 +1,20 @@
 package org.example;
 
 public class Solution {
-    public int rob(int[] nums) {
-        if(nums.length == 0) return 0;
-        if(nums.length == 1) return nums[0];
-        if(nums.length == 2) return Math.max(nums[0], nums[1]);
-
-        int[] dp = new int[nums.length];
-        dp[0] = nums[0];
-        dp[1] = Math.max(nums[0], nums[1]);
-        for(int i = 2; i < nums.length; i++) {
-            dp[i] = Math.max(dp[i-2] + nums[i], dp[i-1]);
+    public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
+        ListNode preHead = new ListNode(0);
+        ListNode last = preHead;
+        while(list1 != null && list2 != null) {
+            if(list1.val > list2.val) {
+                last.next = list2;
+                list2 = list2.next;
+            } else {
+                last.next = list1;
+                list1 = list1.next;
+            }
+            last = last.next;
         }
-        return dp[nums.length-1];
+        last.next = list1 == null ? list2 : list1;
+        return preHead.next;
     }
 }
