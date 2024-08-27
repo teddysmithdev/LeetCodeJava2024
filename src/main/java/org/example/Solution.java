@@ -1,14 +1,40 @@
 package org.example;
 
+import java.util.Stack;
+
 public class Solution {
-    public int maxProfit(int[] prices) {
-        if(prices == null || prices.length <= 0) return 0;
-        int minPrice = prices[0];
-        int profit = 0;
-        for (int i = 1; i < prices.length; i++) {
-            minPrice = Math.min(minPrice, prices[i]);
-            profit = Math.max(profit, prices[i] - minPrice);
+    static class NodeDepth {
+        TreeNode node;
+        int depth;
+
+        NodeDepth(TreeNode node, int depth) {
+            this.node = node;
+            this.depth = depth;
         }
-        return profit;
+    }
+
+    public int maxDepth(TreeNode root) {
+        if(root == null) return 0;
+
+        int maxDepth = 0;
+        Stack<NodeDepth> stack = new Stack<>();
+
+        stack.push(new NodeDepth(root, 1));
+
+        while(!stack.isEmpty()) {
+            NodeDepth current = stack.pop();
+            TreeNode currentNode = current.node;
+            int currentDepth = current.depth;
+
+            maxDepth = Math.max(maxDepth, currentDepth);
+
+            if(currentNode.left != null) {
+                stack.push(new NodeDepth(currentNode.left, currentDepth + 1));
+            }
+            if(currentNode.right != null) {
+                stack.push(new NodeDepth(currentNode.right, currentDepth + 1));
+            }
+        }
+        return maxDepth;
     }
 }
