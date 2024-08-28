@@ -1,40 +1,24 @@
 package org.example;
 
-import java.util.Stack;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Solution {
-    static class NodeDepth {
-        TreeNode node;
-        int depth;
-
-        NodeDepth(TreeNode node, int depth) {
-            this.node = node;
-            this.depth = depth;
-        }
-    }
-
-    public int maxDepth(TreeNode root) {
-        if(root == null) return 0;
-
-        int maxDepth = 0;
-        Stack<NodeDepth> stack = new Stack<>();
-
-        stack.push(new NodeDepth(root, 1));
-
-        while(!stack.isEmpty()) {
-            NodeDepth current = stack.pop();
-            TreeNode currentNode = current.node;
-            int currentDepth = current.depth;
-
-            maxDepth = Math.max(maxDepth, currentDepth);
-
-            if(currentNode.left != null) {
-                stack.push(new NodeDepth(currentNode.left, currentDepth + 1));
+    public List<List<Integer>> generate(int numRows) {
+        List<List<Integer>> r = new ArrayList<>();
+        for(int i = 0; i < numRows; i++) {
+            List<Integer> row = new ArrayList<>();
+            for(int j = 0; j <= i; j++) {
+                row.add(1);
             }
-            if(currentNode.right != null) {
-                stack.push(new NodeDepth(currentNode.right, currentDepth + 1));
+            for(int j = 1; j < i; j++) {
+                int valueAboveLeft = r.get(i - 1).get(j - 1);
+                int valueAboveRight = r.get(i - 1).get(j);
+                int sum = valueAboveLeft + valueAboveRight;
+                row.set(j, sum);
             }
+            r.add(row);
         }
-        return maxDepth;
+        return r;
     }
 }
