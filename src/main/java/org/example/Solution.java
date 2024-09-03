@@ -1,25 +1,20 @@
 package org.example;
 
-import java.util.LinkedList;
-import java.util.Queue;
-
 public class Solution {
-    public boolean isSameTree(TreeNode p, TreeNode q) {
-        if (p == null && q == null) return true;
-        Queue<TreeNode> queue = new LinkedList<>();
-        queue.add(p);
-        queue.add(q);
-        while (!queue.isEmpty()) {
-            p = queue.poll();
-            q = queue.poll();
-            if (p == null && q == null) continue;
-            if (p == null || q == null) return false;
-            if (p.val != q.val) return false;
-            queue.add(p.left);
-            queue.add(q.left);
-            queue.add(p.right);
-            queue.add(q.right);
+    public void rotate(int[][] matrix) {
+        int n = matrix.length;
+        for(int i = 0; i < (n + 1)/2; i++) {
+            for(int j = 0; j < n/2; j++) {
+                int temp = matrix[n - 1 - j][i];
+                //Bottom right to bottom left
+                matrix[n - 1 - j][i] = matrix[n - 1 - i][n - 1 - j];
+                //Top right to bottom right
+                matrix[n - 1 - i][n - 1 - j] = matrix[j][n - 1 - i];
+                //Top left to top right
+                matrix[j][n - 1 - i] = matrix[i][j];
+                //Temp to top left
+                matrix[i][j] = temp;
+            }
         }
-        return true;
     }
 }
