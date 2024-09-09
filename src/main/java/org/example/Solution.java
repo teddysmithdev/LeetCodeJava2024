@@ -1,20 +1,23 @@
 package org.example;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class Solution {
-    private int diameter;
-
-    public int diameterOfBinaryTree(TreeNode root) {
-        longestPath(root);
-        return diameter;
-    }
-
-    private int longestPath(TreeNode root) {
-        if (root == null) return 0;
-        int leftPath = longestPath(root.left);
-        int rightPath = longestPath(root.right);
-
-        diameter = Math.max(diameter, leftPath + rightPath);
-
-        return Math.max(leftPath, rightPath) + 1;
+    public boolean isValidSudoku(char[][] board) {
+        Set set = new HashSet();
+        for(int i = 0; i < 9; i++) {
+            for(int j = 0; j < 9; j++) {
+                char num = board[i][j];
+                if(num != '.') {
+                    if(!set.add(num + " in row " + i) ||
+                    !set.add(num + " in column " + j) ||
+                    !set.add(num + " in block " + i/3 + "-" + j/3)) {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
     }
 }
