@@ -1,28 +1,23 @@
 package org.example;
 
-import java.util.HashSet;
-import java.util.Set;
-
 public class Solution {
-    public int longestConsecutive(int[] nums) {
-        if(nums.length == 0) return 0;
+    public int[] productExceptSelf(int[] nums) {
+        if(nums == null || nums.length == 0) return new int[0];
 
-        Set<Integer> uniqueNumbers = new HashSet<>();
-        for (int num : nums) {
-            uniqueNumbers.add(num);
-        }
-        int maxLengthOfSequence = 0;
-        for(int num : uniqueNumbers) {
-            if(!uniqueNumbers.contains(num - 1)) {
-                int currentLengthOfSequence = 1;
+        int n = nums.length;
+        int[] res = new int[n];
 
-                while(uniqueNumbers.contains(num + 1)) {
-                    num++;
-                    currentLengthOfSequence++;
-                }
-                maxLengthOfSequence = Math.max(maxLengthOfSequence, currentLengthOfSequence);
-            }
+        int prefix = 1, suffix = 1;
+
+        for(int i = 0; i < n; i++) {
+            res[i] = prefix;
+            prefix *= nums[i];
         }
-        return maxLengthOfSequence;
+
+        for(int i = n - 1; i >= 0; i--) {
+            res[i] *= suffix;
+            suffix *= nums[i];
+        }
+        return res;
     }
 }
