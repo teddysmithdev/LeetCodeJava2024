@@ -1,16 +1,12 @@
 package org.example;
 
 public class Solution {
-    public int removeElement(int[] nums, int val) {
-        int validIndex = 0;
-        for (int i = 0; i < nums.length; i++) {
-            if(nums[i] != val) {
-                int temp = nums[validIndex];
-                nums[validIndex] = nums[i];
-                nums[i] = temp;
-                validIndex++;
-            }
+    public int findMaxConsecutiveOnes(int[] nums) {
+        int max = 0, count = 0;
+        for(int num : nums) {
+            count = (num == 1) ? count + 1 : 0;
+            max = Math.max(max, count);
         }
-        return validIndex;
+        return max;
     }
 }
