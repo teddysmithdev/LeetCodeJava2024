@@ -1,19 +1,20 @@
 package org.example;
 
 public class Solution {
-    public boolean hasCycle(ListNode head) {
-        if(head == null) {
-            return false;
+    public int pivotIndex(int[] nums) {
+        int sum = 0;
+        int leftSum = 0;
+
+        for(int num : nums) {
+            sum += num;
         }
-        ListNode slow = head;
-        ListNode fast = head.next;
-        while(slow != fast) {
-            if(fast == null || fast.next == null) {
-                return false;
+
+        for(int i = 0; i < nums.length; i++) {
+            if(leftSum == sum - leftSum - nums[i]) {
+                return i;
             }
-            slow = slow.next;
-            fast = fast.next.next;
+            leftSum += nums[i];
         }
-        return true;
+        return -1;
     }
 }
