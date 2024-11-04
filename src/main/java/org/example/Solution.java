@@ -1,20 +1,16 @@
 package org.example;
 
 public class Solution {
-    public int pivotIndex(int[] nums) {
-        int sum = 0;
-        int leftSum = 0;
-
-        for(int num : nums) {
-            sum += num;
-        }
-
-        for(int i = 0; i < nums.length; i++) {
-            if(leftSum == sum - leftSum - nums[i]) {
-                return i;
+    public int[] plusOne(int[] digits) {
+        for(int i = digits.length - 1; i >= 0; i--) {
+            if(digits[i] < 9) {
+                digits[i]++;
+                return digits;
             }
-            leftSum += nums[i];
+            digits[i] = 0;
         }
-        return -1;
+        int[] result = new int[digits.length + 1];
+        result[0] = 1;
+        return result;
     }
 }
