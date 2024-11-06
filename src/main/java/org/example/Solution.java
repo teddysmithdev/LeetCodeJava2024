@@ -1,28 +1,26 @@
 package org.example;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Solution {
-    public int[] topKFrequent(int[] nums, int k) {
-        Map<Integer, Integer> freqMap = new HashMap<>();
-        for (int num : nums) {
-            freqMap.put(num, freqMap.getOrDefault(num, 0) + 1);
+    public List<List<Integer>> threeSum(int[] nums) {
+        Set<List<Integer>> result = new HashSet<>();
+        for (int i = 0; i < nums.length - 2; i++) {
+            Set<Integer> seen = new HashSet<>();
+            for (int j = i + 1; j < nums.length; j++) {
+                int complement = -nums[i] - nums[j];
+                if (seen.contains(complement)) {
+                    int a = nums[i];
+                    int b = nums[j];
+                    int c = complement;
+                    List<Integer> list = Arrays.asList(Math.min(a, Math.min(b, c)),
+                            a + b + c - Math.min(a, Math.min(b,c)) - Math.max(a, Math.max(b, c)),
+                            Math.max(a, Math.max(b, c)));
+                    result.add(list);
+                }
+                seen.add(nums[j]);
+            }
         }
-
-        List<Integer>[] buckets = new List[nums.length + 1];
-        freqMap.forEach((num, freq) -> {
-            if(buckets[freq] == null) buckets[freq] = new ArrayList<>();
-            buckets[freq].add(num);
-        });
-
-        List<Integer> result = new ArrayList<>();
-        for(int i = buckets.length - 1; i > 0 && result.size() < k; i--) {
-            if(buckets[i] != null) result.addAll(buckets[i]);
-        }
-
-        return result.stream().mapToInt(i -> i).toArray();
+        return new ArrayList<>(result);
     }
 }
