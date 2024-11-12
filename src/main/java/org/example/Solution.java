@@ -1,18 +1,27 @@
 package org.example;
 
 public class Solution {
-    public String longestCommonPrefix(String[] strs) {
-        if (strs == null || strs.length == 0) return "";
-
-        for (int i = 0; i < strs[0].length(); i++) {
-            char currentChar = strs[0].charAt(i);
-
-            for (int j = 1; j < strs.length; j++) {
-                if(i >= strs[j].length() || strs[j].charAt(i) != currentChar) {
-                    return strs[0].substring(0, i);
+    public int trap(int[] height) {
+        int left = 0, right = height.length - 1;
+        int leftMax = 0, rightMax = 0;
+        int water = 0;
+        while (left < right) {
+            if (height[left] <= height[right]) {
+                if(height[left] >= leftMax) {
+                    leftMax = height[left];
+                } else {
+                    water += leftMax - height[left];
                 }
+                left++;
+            } else {
+                if(height[right] >= rightMax) {
+                    rightMax = height[right];
+                } else {
+                    water += rightMax - height[right];
+                }
+                right--;
             }
         }
-        return strs[0];
+        return water;
     }
 }
