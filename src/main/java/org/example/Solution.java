@@ -1,20 +1,22 @@
 package org.example;
 
-public class Solution {
-    public void rotate(int[] nums, int k) {
-        k %= nums.length;
-        reverse(nums, 0, nums.length - 1);
-        reverse(nums, 0, k - 1);
-        reverse(nums, k, nums.length - 1);
-    }
+import java.util.HashMap;
 
-    public void reverse(int[] nums, int start, int end) {
-        while(start < end) {
-            int temp = nums[start];
-            nums[start] = nums[end];
-            nums[end] = temp;
-            start++;
-            end--;
+public class Solution {
+    public int subarraySum(int[] nums, int k) {
+        HashMap<Integer, Integer> prefixSumCount = new HashMap<>();
+        prefixSumCount.put(0, 1);
+
+        int prefixSum = 0;
+        int count = 0;
+
+        for(int num: nums) {
+            prefixSum += num;
+            if(prefixSumCount.containsKey(prefixSum - k)) {
+                count += prefixSumCount.get(prefixSum - k);
+            }
+            prefixSumCount.put(prefixSum, prefixSumCount.getOrDefault(prefixSum, 0) + 1);
         }
+        return count;
     }
 }
