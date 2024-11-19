@@ -1,22 +1,30 @@
 package org.example;
 
-import java.util.HashMap;
-
 public class Solution {
-    public int subarraySum(int[] nums, int k) {
-        HashMap<Integer, Integer> prefixSumCount = new HashMap<>();
-        prefixSumCount.put(0, 1);
+    public int search(int[] nums, int target) {
+        int left = 0;
+        int right = nums.length - 1;
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
 
-        int prefixSum = 0;
-        int count = 0;
-
-        for(int num: nums) {
-            prefixSum += num;
-            if(prefixSumCount.containsKey(prefixSum - k)) {
-                count += prefixSumCount.get(prefixSum - k);
+            if(nums[mid] == target) {
+                return mid;
             }
-            prefixSumCount.put(prefixSum, prefixSumCount.getOrDefault(prefixSum, 0) + 1);
+
+            if(nums[left] <= nums[mid]) {
+                if(nums[left] <= target && target < nums[mid]) {
+                    right = mid - 1;
+                } else {
+                    left = mid + 1;
+                }
+            } else {
+                if(nums[mid] < target && target <= nums[right]) {
+                    left = mid + 1;
+                } else {
+                    right = mid - 1;
+                }
+            }
         }
-        return count;
+        return -1;
     }
 }
