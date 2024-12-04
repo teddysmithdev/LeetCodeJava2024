@@ -1,15 +1,27 @@
 package org.example;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Solution {
-    public boolean validMountainArray(int[] arr) {
-        if(arr.length < 3) return false;
+    public List<String> summaryRanges(int[] nums) {
+        List<String> result = new ArrayList<>();
+        if(nums.length == 0) return result;
 
-        int left = 0, right = arr.length - 1;
+        int start = nums[0];
 
-        while(left + 1 < arr.length && arr[left] < arr[left + 1]) left++;
-
-        while(right > 0 && arr[right - 1] > arr[right]) right--;
-
-        return left == right && left != 0 && right != arr.length - 1;
+        for(int i = 1; i <= nums.length; i++) {
+            if(i == nums.length || nums[i] != nums[i - 1] + 1) {
+                if(start == nums[i - 1]) {
+                    result.add(String.valueOf(start));
+                } else {
+                    result.add(start + "->" + nums[i - 1]);
+                }
+                if(i < nums.length) {
+                    start = nums[i];
+                }
+            }
+        }
+        return result;
     }
 }
