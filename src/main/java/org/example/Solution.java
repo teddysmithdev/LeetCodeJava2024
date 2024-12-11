@@ -1,24 +1,18 @@
 package org.example;
 
 public class Solution {
-    public String convert(String s, int numRows) {
-        if(numRows == 1 || s.length() <= numRows) return s;
+    public int reverse(int x) {
+        int reversed = 0;
 
-        StringBuilder[] rows = new StringBuilder[numRows];
-        for(int i = 0; i < numRows; i++) rows[i] = new StringBuilder();
+        while (x != 0) {
+            int digit = x % 10;
+            x /= 10;
 
-        int curRow = 0;
-        boolean goingDown = false;
+            if(reversed > Integer.MAX_VALUE / 10 || (reversed == Integer.MAX_VALUE / 10 && digit > 7)) return 0;
+            if(reversed < Integer.MIN_VALUE / 10 || (reversed == Integer.MIN_VALUE / 10 && digit < -8)) return 0;
 
-        for(char c : s.toCharArray()) {
-            rows[curRow].append(c);
-            if(curRow == 0 || curRow == numRows - 1) goingDown = !goingDown;
-            curRow += goingDown ? 1 : -1;
+            reversed = reversed * 10 + digit;
         }
-
-        StringBuilder result = new StringBuilder();
-        for(StringBuilder row : rows) result.append(row);
-
-        return result.toString();
+        return reversed;
     }
 }
