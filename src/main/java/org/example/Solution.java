@@ -1,18 +1,26 @@
 package org.example;
 
 public class Solution {
-    public int reverse(int x) {
-        int reversed = 0;
+    public boolean searchMatrix(int[][] matrix, int target) {
+        if(matrix == null || matrix.length == 0 || matrix[0].length == 0) return false;
 
-        while (x != 0) {
-            int digit = x % 10;
-            x /= 10;
+        int rows = matrix.length, cols = matrix[0].length;
+        int left = 0, right = rows * cols - 1;
 
-            if(reversed > Integer.MAX_VALUE / 10 || (reversed == Integer.MAX_VALUE / 10 && digit > 7)) return 0;
-            if(reversed < Integer.MIN_VALUE / 10 || (reversed == Integer.MIN_VALUE / 10 && digit < -8)) return 0;
+        while(left <= right) {
+            int mid = left + (right - left) / 2;
+            int row = mid / cols;
+            int col = mid % cols;
+            int midVal = matrix[row][col];
 
-            reversed = reversed * 10 + digit;
+            if(midVal == target) {
+                return true;
+            } else if(midVal < target) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
         }
-        return reversed;
+        return false;
     }
 }
