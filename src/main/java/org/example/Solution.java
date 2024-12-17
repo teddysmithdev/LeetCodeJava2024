@@ -1,26 +1,24 @@
 package org.example;
 
 public class Solution {
-    public boolean searchMatrix(int[][] matrix, int target) {
-        if(matrix == null || matrix.length == 0 || matrix[0].length == 0) return false;
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
 
-        int rows = matrix.length, cols = matrix[0].length;
-        int left = 0, right = rows * cols - 1;
+        ListNode first = dummy;
+        ListNode second = dummy;
 
-        while(left <= right) {
-            int mid = left + (right - left) / 2;
-            int row = mid / cols;
-            int col = mid % cols;
-            int midVal = matrix[row][col];
-
-            if(midVal == target) {
-                return true;
-            } else if(midVal < target) {
-                left = mid + 1;
-            } else {
-                right = mid - 1;
-            }
+        for(int i = 0; i <= n; i++) {
+            first = first.next;
         }
-        return false;
+
+        while(first != null) {
+            first = first.next;
+            second = second.next;
+        }
+
+        second.next = second.next.next;
+
+        return dummy.next;
     }
 }
