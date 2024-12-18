@@ -1,24 +1,36 @@
 package org.example;
 
+import java.util.Stack;
+
 public class Solution {
-    public ListNode removeNthFromEnd(ListNode head, int n) {
-        ListNode dummy = new ListNode(0);
-        dummy.next = head;
+    public TreeNode invertTreeRecursive(TreeNode root) {
+        if(root == null) return null;
 
-        ListNode first = dummy;
-        ListNode second = dummy;
+        TreeNode temp = root.left;
+        root.left = root.right;
+        root.right = temp;
 
-        for(int i = 0; i <= n; i++) {
-            first = first.next;
+        invertTreeRecursive(root.left);
+        invertTreeRecursive(root.right);
+
+        return root;
+    }
+    public TreeNode invertTreeIterative(TreeNode root) {
+        if(root == null) return null;
+
+        Stack<TreeNode> stack = new Stack<>();
+        stack.push(root);
+
+        while(!stack.isEmpty()) {
+            TreeNode node = stack.pop();
+
+            TreeNode temp = node.left;
+            node.left = node.right;
+            node.right = temp;
+
+            if(node.left != null) stack.push(node.left);
+            if(node.right != null) stack.push(node.right);
         }
-
-        while(first != null) {
-            first = first.next;
-            second = second.next;
-        }
-
-        second.next = second.next.next;
-
-        return dummy.next;
+        return root;
     }
 }
