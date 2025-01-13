@@ -1,15 +1,14 @@
 package org.example;
 
 
+import java.util.Arrays;
+import java.util.List;
+
 public class Main {
     public static void main(String[] args) {
-        Solution solution = new Solution();
-        char[][] board2 = {
-                {'A', 'B', 'C', 'E'},
-                {'S', 'F', 'C', 'S'},
-                {'A', 'D', 'E', 'E'}
-        };
-        String word2 = "SEE"; // Expected: true
-        solution.exist(board2, word2);
+        Codec codec = new Codec();
+        List<String> input = Arrays.asList("hello", "world");
+        String encoded = codec.encode(input);
+        List<String> decoded = codec.decode(encoded);
     }
 }
