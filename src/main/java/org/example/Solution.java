@@ -1,28 +1,21 @@
 package org.example;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 public class Solution {
-    public List<List<Integer>> combinationSum(int[] candidates, int target) {
-        List<List<Integer>> result = new ArrayList<>();
-        Arrays.sort(candidates);
-        backtrack(candidates, target, 0, new ArrayList<>(), result);
-        return result;
-    }
-    private void backtrack(int[] candidates, int target, int start, List<Integer> current, List<List<Integer>> result) {
-        if(target == 0) {
-            result.add(new ArrayList<>(current));
-            return;
-        }
-        if(target < 0) return;
+    public int characterReplacement(String s, int k) {
+        int[] charCount = new int[26];
+        int start = 0, maxFreq = 0, maxLength = 0;
 
-        for(int i = start; i < candidates.length; i++) {
-            if(candidates[i] > target) break;
-            current.add(candidates[i]);
-            backtrack(candidates, target - candidates[i], i, current, result);
-            current.remove(current.size() - 1);
+        for(int end = 0; end < s.length(); end++) {
+            charCount[s.charAt(end) - 'A']++;
+            maxFreq = Math.max(maxFreq, charCount[s.charAt(end) - 'A']);
+
+            while((end - start + 1) - maxFreq > k) {
+                charCount[s.charAt(start) - 'A']--;
+                start++;
+            }
+
+            maxLength = Math.max(maxLength, end - start + 1);
         }
+        return maxLength;
     }
 }
